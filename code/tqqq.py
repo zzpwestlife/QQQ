@@ -215,13 +215,11 @@ class Strategy(StrategyBase):
         if is_top_signal:
             next_state = "TOP_ESCAPE"
         elif ma200 is not None and close_qqq < ma200:
-            if drawdown <= -0.30:
-                next_state = "ZONE_DESPAIR_TQQQ"
-            elif drawdown <= -0.10:
-                if ma20 is not None and close_qqq > ma20:
+            if ma20 is not None and close_qqq > ma20:
+                if drawdown <= -0.10:
                     next_state = "ZONE_BATTLE_ATTACK"
                 else:
-                    next_state = "ZONE_BATTLE_DEFEND"
+                    next_state = "BEAR_CASH"
             else:
                 next_state = "BEAR_CASH"
         else:

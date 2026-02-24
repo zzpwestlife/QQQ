@@ -1,0 +1,62 @@
+
+    <html>
+    <head>
+        <title>Backtest Report</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: right; }
+            th { background-color: #f2f2f2; }
+            tr:nth-child(even) { background-color: #f9f9f9; }
+            h1 { color: #333; }
+        </style>
+    </head>
+    <body>
+        <h1>Backtest Performance Comparison</h1>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Total Return</th>
+      <th>CAGR</th>
+      <th>Annual Volatility</th>
+      <th>Max Drawdown</th>
+      <th>Sharpe Ratio</th>
+      <th>Calmar Ratio</th>
+    </tr>
+    <tr>
+      <th>Strategy</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TQQQ Strategy</th>
+      <td>2222.87%</td>
+      <td>12.48%</td>
+      <td>48.91%</td>
+      <td>-97.73%</td>
+      <td>0.4880</td>
+      <td>0.1276</td>
+    </tr>
+    <tr>
+      <th>QQQ Benchmark</th>
+      <td>1125.43%</td>
+      <td>9.82%</td>
+      <td>27.02%</td>
+      <td>-82.97%</td>
+      <td>0.4820</td>
+      <td>0.1183</td>
+    </tr>
+  </tbody>
+</table>
+        <br>
+        <img src="compare_chart.png" alt="Performance Chart" style="width:100%; max-width:1000px;">
+    </body>
+    </html>
+    
