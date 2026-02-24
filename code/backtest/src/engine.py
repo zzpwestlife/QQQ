@@ -59,6 +59,8 @@ def run_backtest(qqq_path, tqqq_path, strategy_path):
         'bar_high': bar_high,
         'bar_volume': bar_volume,
         'ma': ma,
+        'rsi': rsi,
+        'vol': vol,
         'request_orderid': request_orderid,
         'order_status': order_status,
         'position_holding_qty': position_holding_qty,

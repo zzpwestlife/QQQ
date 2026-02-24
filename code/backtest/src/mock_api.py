@@ -247,6 +247,58 @@ def ma(symbol, period, bar_type, data_type, select, session_type):
         return None
     return sum(subset) / len(subset)
 
+def rsi(symbol, period, bar_type, data_type, select, session_type):
+    # RSI implementation
+    # Need period + select + lookback for calculation
+    # Standard RSI requires previous average gain/loss, which implies recursive calc or long history
+    # Simple approximation using rolling window
+    lookback = period * 5 # Get enough data
+    data = context.get_data_slice(symbol, 'close', lookback + select)
+    if not data or len(data) < period + 1:
+        return 50.0 # Default neutral
+    
+    # Trim to relevant end
+    end_idx = len(data) - (select - 1)
+    if end_idx < period + 1:
+        return 50.0
+        
+    prices = data[:end_idx]
+    # We need to calculate RSI for the last point
+    # Use pandas for efficiency if possible, but data is list
+    # Convert to series
+    s = pd.Series(prices)
+    delta = s.diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+    
+    rs = gain / loss
+    rsi_val = 100 - (100 / (1 + rs))
+    
+    val = rsi_val.iloc[-1]
+    if np.isnan(val):
+        return 50.0
+    return float(val)
+
+def vol(symbol, period, select=1):
+    # Annualized Volatility
+    # select=1 means current window
+    data = context.get_data_slice(symbol, 'close', period + select)
+    if not data or len(data) < period + 1:
+        return 0.0
+        
+    end_idx = len(data) - (select - 1)
+    prices = data[:end_idx]
+    s = pd.Series(prices)
+    ret = s.pct_change().dropna()
+    # Take last 'period' returns
+    if len(ret) < period:
+        return 0.0
+    
+    ret_window = ret.tail(period)
+    # Annualize
+    return float(ret_window.std() * np.sqrt(252))
+
+
 def request_orderid(symbol, status, start, end, time_zone):
     return [] # Always empty for backtest (instant fill)
 
